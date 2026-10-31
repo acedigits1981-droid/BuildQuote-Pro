@@ -20,6 +20,21 @@
 ---
 
 ## 🚀 Built With
-* HTML5 / Tailwind CSS (via CDN)
-* Vanilla JavaScript (ES6+)
+* React / TypeScript / Vite
+* Tailwind CSS (Vite plugin)
 * HTML5 Canvas & Web APIs (`navigator.share`, `localStorage`, `getUserMedia`)
+
+## Development and publishing
+
+Install the locked dependencies and run the existing checks:
+
+```sh
+npm ci
+npm test
+npm run lint
+npm run build
+```
+
+Use `npm run dev` for local development, or `npm run preview` to inspect the production build locally. Vite writes the production app to `dist/`; `vercel.json` explicitly serves that directory instead of the repository root.
+
+Keep esbuild compatible with Vite's peer dependency range, and commit the regenerated `package-lock.json` when updating dependencies. Do not use `--force` or `--legacy-peer-deps` to bypass dependency conflicts.

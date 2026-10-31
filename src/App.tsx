@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import {
   Layers,
   LayoutGrid,
@@ -978,6 +979,8 @@ export default function App() {
         isOpen={isUnitConverterOpen}
         onClose={() => setIsUnitConverterOpen(false)}
       />
+
+      <SpeedInsights />
     </div>
   );
 }

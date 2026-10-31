@@ -38,3 +38,16 @@ npm run build
 Use `npm run dev` for local development, or `npm run preview` to inspect the production build locally. Vite writes the production app to `dist/`; `vercel.json` explicitly serves that directory instead of the repository root.
 
 Keep esbuild compatible with Vite's peer dependency range, and commit the regenerated `package-lock.json` when updating dependencies. Do not use `--force` or `--legacy-peer-deps` to bypass dependency conflicts.
+
+## Install on a phone
+
+After these changes are deployed, open the site in your phone browser and tap **Install App**.
+
+- **Android (Chrome):** confirm the install prompt, or use the browser menu → Install app / Add to Home screen.
+- **iPhone / iPad (Safari):** Share → Add to Home Screen → Add. Leave Open as Web App enabled if offered.
+
+Use one domain consistently. Each domain is a separate app origin with separate saved quotes, photos, and Pro status; they do not sync. Use the existing JSON backup export/restore to move saved data between origins.
+
+Keep the first visit online long enough for the service worker to finish caching. Calculators and locally saved estimates can then work offline; payments, external links, and first-time downloads still require a connection. External web fonts fall back to system fonts offline. A new version waits for old app windows to close before activating, so an update won't reload an open estimate.
+
+The static manifest is in `public/manifest.webmanifest`. PNG installation icons are raster exports of the existing `public/icon.svg` artwork; the maskable version adds safe padding on an opaque background. `vite-plugin-pwa` generates `dist/sw.js` and precaches the final hashed JavaScript, CSS, HTML, manifest, and icons on every build. Do not add a competing worker in `public/sw.js`.

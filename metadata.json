@@ -1,0 +1,6 @@
+{
+  "name": "BuildQuote Pro: Contractor & DIY Estimator",
+  "description": "Offline-first contractor and DIY material estimator for concrete, drywall, tile, and paint with multi-item client quote and PDF invoice generation.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

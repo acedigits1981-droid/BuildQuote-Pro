@@ -51,3 +51,9 @@ Use one domain consistently. Each domain is a separate app origin with separate 
 Keep the first visit online long enough for the service worker to finish caching. Calculators and locally saved estimates can then work offline; payments, external links, and first-time downloads still require a connection. External web fonts fall back to system fonts offline. A new version waits for old app windows to close before activating, so an update won't reload an open estimate.
 
 The static manifest is in `public/manifest.webmanifest`. PNG installation icons are raster exports of the existing `public/icon.svg` artwork; the maskable version adds safe padding on an opaque background. `vite-plugin-pwa` generates `dist/sw.js` and precaches the final hashed JavaScript, CSS, HTML, manifest, and icons on every build. Do not add a competing worker in `public/sw.js`.
+
+### Installation banner
+
+A compact banner below the header offers native installation where supported, or opens the platform-specific installation guide. The close button dismisses the banner for the current browser session; the header install control stays available. The banner is excluded from printed estimates.
+
+The banner and header install control hide in standalone mode or after an `appinstalled` event. A local marker remembers detected installation on that origin/browser; a later `beforeinstallprompt` clears it if the browser offers installation again. Installation is not universally detectable across browsers/devices (especially an iOS browser tab before the installed app has been opened), and uninstalling does not always emit an event. No cross-domain or cross-device detection is implied.

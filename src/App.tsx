@@ -39,6 +39,7 @@ import { PaintCalculator } from './components/PaintCalculator';
 import { QuoteBuilder } from './components/QuoteBuilder';
 import { ProUnlockModal } from './components/ProUnlockModal';
 import { PWAInstallModal } from './components/PWAInstallModal';
+import { PWAInstallBanner } from './components/PWAInstallBanner';
 import { JobSiteCameraModal } from './components/JobSiteCameraModal';
 import { PhotoAnnotationModal } from './components/PhotoAnnotationModal';
 import { UnitConverterModal } from './components/UnitConverterModal';
@@ -165,6 +166,7 @@ export default function App() {
   const [showUnlockBanner, setShowUnlockBanner] = useState<boolean>(false);
   const [isProModalOpen, setIsProModalOpen] = useState<boolean>(false);
   const [isInstallModalOpen, setIsInstallModalOpen] = useState<boolean>(false);
+  const [isInstalling, setIsInstalling] = useState(false);
   const [isCameraModalOpen, setIsCameraModalOpen] = useState<boolean>(false);
   const [isUnitConverterOpen, setIsUnitConverterOpen] = useState<boolean>(false);
   const [annotatingPhoto, setAnnotatingPhoto] = useState<JobSitePhoto | null>(null);
@@ -359,9 +361,16 @@ export default function App() {
   };
 
   const handleInstallClick = async () => {
-    const outcome = await triggerInstall();
-    if (outcome === 'manual') {
+    if (isInstalling) return;
+    setIsInstalling(true);
+    try {
+      const outcome = await triggerInstall();
+      if (outcome === 'manual') setIsInstallModalOpen(true);
+    } catch {
+      // If a browser rejects the native prompt, offer manual steps instead.
       setIsInstallModalOpen(true);
+    } finally {
+      setIsInstalling(false);
     }
   };
 
@@ -538,6 +547,7 @@ export default function App() {
                 type="button"
                 onClick={handleInstallClick}
                 aria-label="Install App"
+                disabled={isInstalling}
                 className="min-h-[36px] sm:min-h-[38px] px-2 sm:px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-100 flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap shrink-0"
               >
                 <Download className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -569,6 +579,13 @@ export default function App() {
           </div>
         </div>
       </header>
+
+      <PWAInstallBanner
+        isInstalled={isInstalled}
+        isIOS={isIOS}
+        isInstalling={isInstalling}
+        onInstall={handleInstallClick}
+      />
 
       {/* Celebratory Pro Unlocked Banner */}
       {showUnlockBanner && (

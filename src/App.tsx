@@ -14,6 +14,7 @@ import {
   Moon,
   ArrowLeftRight,
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import {
   UnitSystem,
   WasteFactor,
@@ -978,6 +979,7 @@ export default function App() {
         isOpen={isUnitConverterOpen}
         onClose={() => setIsUnitConverterOpen(false)}
       />
+      <Analytics />
     </div>
   );
 }

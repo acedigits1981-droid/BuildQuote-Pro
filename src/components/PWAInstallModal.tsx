@@ -50,7 +50,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
               Install BuildQuote Pro App
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Works 100% offline on job sites with zero cell signal
+              Open online once to save the app for offline job sites.
             </p>
           </div>
         </div>
@@ -66,11 +66,13 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
             </div>
             <div>
               <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
-                <span>Tap Share</span>
-                <Share className="w-4 h-4 text-sky-600 dark:text-sky-400 inline" />
+                <span>{isIOS ? 'Open the Share menu' : 'Open your browser menu'}</span>
+                {isIOS && <Share className="w-4 h-4 text-sky-600 dark:text-sky-400 inline" />}
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-                Tap the browser <strong>Share</strong> icon in your Safari or mobile menu bar.
+                {isIOS
+                  ? <>In Safari, tap <strong>Share</strong> (you may need to open the menu first).</>
+                  : <>On Android, open Chrome and tap the <strong>⋮</strong> menu. On desktop, look for the install icon in Chrome or Edge’s address bar.</>}
               </p>
             </div>
           </div>
@@ -85,8 +87,9 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
                 <PlusSquare className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-                Select <strong>Tap Share -&gt; Add to Home Screen</strong> (or &ldquo;Install
-                App&rdquo; in Chrome/Edge address bar) to launch full-screen offline.
+                {isIOS
+                  ? <>Choose <strong>Add to Home Screen</strong>, leave <strong>Open as Web App</strong> on if shown, then tap <strong>Add</strong>.</>
+                  : <>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>, then confirm. If no install option appears, try Chrome or Edge.</>}
               </p>
             </div>
           </div>
